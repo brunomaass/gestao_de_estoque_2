@@ -76,9 +76,7 @@ class HomePage extends StatelessWidget {
                             );
                           }).toList();
                         },
-                      ),
-                      // navegar para a tela de detalhes ao clicar no produto
-            
+                      ),            
                     ),
                   );
                 });

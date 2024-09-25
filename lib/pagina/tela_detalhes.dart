@@ -36,37 +36,45 @@ class ProductDetails extends StatelessWidget {
 
           }
 
-          final productData = snapshot.data!.data() as Map<String, dynamic>;
+          var productData = snapshot.data!.data() as Map<String, dynamic>;
 
-          return Padding(
-            padding: EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  productData['nome'],
-                ),
-                SizedBox(height: 16,),
-                Text('Código: ${productData['codigo']}'),
-                SizedBox(height: 8,),
-                Text('Unidade de Medida: ${productData['unidade']}'),
-                SizedBox(height: 8,),
-                Text('Quantidade em Estoque: ${productData['quantidade']}'),
-                SizedBox(height: 16,),
-
-                // botão de edição
-                Spacer(),
-                ElevatedButton(
-                  onPressed: () {
-                   
-                  }, 
-                  child: Text('Editar Produto'),
-                ),
-              ],
+          return Card(
+            child: Padding(
+              padding: EdgeInsets.all(16),
+              child: Row(
+                children: [
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        productData['nome'],
+                      ),
+                      SizedBox(height: 16,),
+                      Text('Código: ${productData['codigo']}'),
+                      SizedBox(height: 8,),
+                      Text('Unidade de Medida: ${productData['unidade']}'),
+                      SizedBox(height: 8,),
+                      Text('Quantidade em Estoque: ${productData['quantidade']}'),
+                      SizedBox(height: 35,),
+                      Divider(),
+                    
+                      // botão de edição
+                      ElevatedButton(
+                        onPressed: () {
+                         
+                        }, 
+                        child: Text('Editar Produto'),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           );
         }
-      ),  
+      ), 
+       
     );
   }
 }
