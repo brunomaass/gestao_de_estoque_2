@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "762139560841",
+    "project_id": "sistema-de-gestao-de-est-9fcc1",
+    "storage_bucket": "sistema-de-gestao-de-est-9fcc1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:762139560841:android:7c8c3fba53169208352f58",
+        "android_client_info": {
+          "package_name": "com.example.controle_de_estoque"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYJWlfHa-aqsT5dhOtSQw2QJgpQo_LBgI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:762139560841:android:0ee56e582f8e4353352f58",
+        "android_client_info": {
+          "package_name": "com.example.gestao_de_estoque_2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYJWlfHa-aqsT5dhOtSQw2QJgpQo_LBgI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
