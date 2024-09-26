@@ -1,80 +1,83 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:gestao_de_estoque_2/widgets/my_app_bar.dart';
+import 'package:gestao_de_estoque_2/pagina/tela_de_edicao_produto.dart';
 
-class ProductDetails extends StatelessWidget {
+class ProductDetailPage extends StatefulWidget {
   final String productId;
 
-  ProductDetails({super.key, required this.productId});
+  const ProductDetailPage({Key? key, required this.productId}) : super(key: key);
 
   @override
+  _ProductDetailPageState createState() => _ProductDetailPageState();
+}
 
-  Widget build(BuildContext context) {
+class _ProductDetailPageState extends State<ProductDetailPage> {
+  String productName = '';
+  int currentQuantity = 0;
+  String unit = '';
 
-    return Scaffold(
-      appBar: MyAppBar(
-        title: 'Detalhes do Produto'
+  @override
+  void initState() {
+    super.initState();
+    _loadProductData();
+  }
+
+  // Método para carregar os dados do produto
+  void _loadProductData() async {
+    DocumentSnapshot productSnapshot = await FirebaseFirestore.instance.collection('Items').doc(widget.productId).get();
+
+    setState(() {
+      productName = productSnapshot['nome'];
+      currentQuantity = productSnapshot['quantidade'];
+      unit = productSnapshot['unidade'];
+    });
+  }
+
+  // Método para navegar até a tela de edição
+  void _navigateToEditProduct() async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EditProductPage(
+          productId: widget.productId,
+          productName: productName,
+          currentQuantity: currentQuantity,
+          unit: unit,
         ),
-      body: FutureBuilder<DocumentSnapshot>(
-        future: FirebaseFirestore.instance.collection('items').doc(productId).get(), 
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return Center(child: Text('Erro ao carregar detalhes')
-          );
+      ),
+    );
 
-          }
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator(),
-          );
+    // Verifica se houve uma atualização
+    if (result == true) {
+      _loadProductData(); // Recarrega os dados do produto
+    }
+  }
 
-          }
-          if (!snapshot.hasData || !snapshot.data!.exists) {
-            return Center(child: Text('Produto não encontrado'),
-          );
-
-          }
-
-          var productData = snapshot.data!.data() as Map<String, dynamic>;
-
-          return Card(
-            child: Padding(
-              padding: EdgeInsets.all(16),
-              child: Row(
-                children: [
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        productData['nome'],
-                      ),
-                      SizedBox(height: 16,),
-                      Text('Código: ${productData['codigo']}'),
-                      SizedBox(height: 8,),
-                      Text('Unidade de Medida: ${productData['unidade']}'),
-                      SizedBox(height: 8,),
-                      Text('Quantidade em Estoque: ${productData['quantidade']}'),
-                      SizedBox(height: 35,),
-                      Divider(),
-                    
-                      // botão de edição
-                      ElevatedButton(
-                        onPressed: () {
-                         
-                        }, 
-                        child: Text('Editar Produto'),
-                      ),
-                    ],
-                  ),
-                ],
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Detalhes do Produto'),
+      ),
+      body: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Text('Nome: $productName', style: TextStyle(fontSize: 18)),
+              SizedBox(height: 8),
+              Text('Quantidade: $currentQuantity $unit', style: TextStyle(fontSize: 18)),
+              SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: _navigateToEditProduct,
+                child: Text('Editar Produto'),
               ),
-            ),
-          );
-        }
-      ), 
-       
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

@@ -12,7 +12,7 @@ class WeeklySumaryPage extends StatelessWidget {
     return Scaffold(
       appBar: MyAppBar(title: 'Resumo Semanal'),
       body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('items').snapshots(), 
+        stream: FirebaseFirestore.instance.collection('Items').snapshots(), 
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return Center(child: Text('Erro ao Carregar'),);

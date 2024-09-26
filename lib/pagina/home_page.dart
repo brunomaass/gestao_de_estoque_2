@@ -4,7 +4,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:gestao_de_estoque_2/pagina/te_de_saida.dart';
+import 'package:gestao_de_estoque_2/pagina/tela_de_cadastro.dart';
+import 'package:gestao_de_estoque_2/pagina/tela_de_entrada.dart';
 import 'package:gestao_de_estoque_2/pagina/tela_detalhes.dart';
+import 'package:gestao_de_estoque_2/pagina/tela_edicao_resumo.dart';
 import 'package:gestao_de_estoque_2/widgets/my_app_bar.dart';
 
 class HomePage extends StatelessWidget {
@@ -32,7 +36,7 @@ class HomePage extends StatelessWidget {
 
           Expanded(
             child: StreamBuilder(
-              stream: FirebaseFirestore.instance.collection('items').snapshots(), 
+              stream: FirebaseFirestore.instance.collection('Items').snapshots(), 
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.hasError) {
                   return Center(
@@ -59,7 +63,7 @@ class HomePage extends StatelessWidget {
 
                         },
                         itemBuilder: (BuildContext context) {
-                          return {'Detalhes', 'Entrada', 'Saída'}
+                          return {'Detalhes', 'Entrada', 'Saída', 'Editar'}
                           .map((String choice) {
                             return PopupMenuItem(
                               value: choice,
@@ -68,8 +72,28 @@ class HomePage extends StatelessWidget {
                                 if (choice == 'Detalhes') {
                                   Navigator.push(
                                   context, 
-                                  MaterialPageRoute(builder: (context) => ProductDetails(productId: product.id))
+                                  MaterialPageRoute(builder: (context) => ProductDetailPage(productId: product.id))
                                 );
+                                }
+                                if (choice == 'Entrada') {
+                                  Navigator.push(
+                                  context, 
+                                  MaterialPageRoute(builder: (context) => ProductEntryPage(
+                                    productId: product.id, 
+                                    productName: product['nome']
+                                  )
+                                ));
+                                }
+                                if (choice == 'Saída') {
+                                  Navigator.push(
+                                    context, 
+                                    MaterialPageRoute(
+                                      builder: (context) => ProductExitPage(
+                                        productId: product.id, 
+                                        productName: product['nome'],
+                                        )
+                                    )
+                                  );
                                 }
                               
                               },
@@ -88,7 +112,12 @@ class HomePage extends StatelessWidget {
       //Botão para adicionar Produto
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-
+          Navigator.push(
+            context, 
+            MaterialPageRoute(
+              builder: (context) => ProductRegistrationPage(),
+            )
+            );
         },
         
         tooltip: 'Adicionar Produto',
