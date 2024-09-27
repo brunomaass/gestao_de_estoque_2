@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gestao_de_estoque_2/pagina/te_de_saida.dart';
+import 'package:gestao_de_estoque_2/pagina/tela%20_resumo_semanal.dart';
 import 'package:gestao_de_estoque_2/pagina/tela_de_cadastro.dart';
 import 'package:gestao_de_estoque_2/pagina/tela_de_entrada.dart';
 import 'package:gestao_de_estoque_2/pagina/tela_detalhes.dart';
@@ -18,7 +19,22 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(title: 'Estoque'),
+      appBar: AppBar(
+        title: Text('Estoque'),
+        actions: [
+          IconButton(
+            onPressed: (){
+              Navigator.push(
+                context, 
+                MaterialPageRoute(
+                  builder: (context) => WeeklySummaryPage(), 
+                  )
+                );
+            }, 
+            icon: Icon(Icons.assessment)
+            )
+        ],
+      ),
       body: Column(
         children: [
           // barra de pesquisa

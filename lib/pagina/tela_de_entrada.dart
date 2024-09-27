@@ -86,6 +86,7 @@ class _ProductEntryPageState extends State<ProductEntryPage> {
           .doc(widget.productId)
           .update({
         'quantidade': FieldValue.increment(quantity), // incrementa a quantidade
+        'data_de_entrada': DateTime.now().toLocal().toString(),
       });
 
       // limpa os campos após salvar

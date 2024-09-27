@@ -62,8 +62,8 @@ class _ProductExitPageState extends State<ProductExitPage> {
               .get();
 
           // Verificar se o campo do período existe, se não, inicializar como 0
-          int currentStock = productSnapshot['quantidade'];
-          int currentExit = productSnapshot[fieldToUpdate] ?? 0;
+          double currentStock = productSnapshot['quantidade'];
+          double currentExit = productSnapshot[fieldToUpdate] ?? 0;
 
           // Verificar se a quantidade de saída é válida (não excede o estoque)
           if (exitQuantity <= currentStock) {
@@ -71,6 +71,7 @@ class _ProductExitPageState extends State<ProductExitPage> {
             await FirebaseFirestore.instance.collection('Items').doc(widget.productId).update({
               'quantidade': currentStock - exitQuantity,
               fieldToUpdate: currentExit + exitQuantity,
+              'data_de_saida': _selectedDate.toString(),
             });
 
             // Limpar campos e exibir mensagem de sucesso

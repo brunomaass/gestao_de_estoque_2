@@ -13,7 +13,7 @@ class ProductDetailPage extends StatefulWidget {
 
 class _ProductDetailPageState extends State<ProductDetailPage> {
   String productName = '';
-  int currentQuantity = 0;
+  double currentQuantity = 0;
   String unit = '';
 
   @override
@@ -59,22 +59,26 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       appBar: AppBar(
         title: Text('Detalhes do Produto'),
       ),
-      body: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Text('Nome: $productName', style: TextStyle(fontSize: 18)),
-              SizedBox(height: 8),
-              Text('Quantidade: $currentQuantity $unit', style: TextStyle(fontSize: 18)),
-              SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: _navigateToEditProduct,
-                child: Text('Editar Produto'),
-              ),
-            ],
+      body: SizedBox(
+        width: double.infinity,
+        child: Card(
+          child: Padding(
+            padding:  EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text('Nome: $productName', style: TextStyle(fontSize: 18)),
+                SizedBox(height: 8),
+                Text('Quantidade: $currentQuantity $unit', style: TextStyle(fontSize: 18)),
+                SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: _navigateToEditProduct,
+                  child: Text('Editar Produto'),
+                ),
+              ],
+            ),
           ),
         ),
       ),
